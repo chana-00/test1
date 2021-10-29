@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #div1{
+        width: 100px;
+        height: 100px;
+        background-color: yellowgreen;
+        float: left;
+        margin-right: 100px;
+
+    }
+    #div2{
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        float: left;
+        clear: left;
+    }  
+
+    #div3{
+        width: 100px;
+        border: 1px red solid;
+        clear: left;
+    }
+
+    #div3::after{
+        content: '';
+        display: block;
+        clear: left;
+    }
+
+    #div4{
+        width: 50px;
+        height: 100px;
+        background-color: green;
+        float: left;
+    }
+    
+</style>
+<body>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <div id="div3">
+        <div id="div4"></div>
+    </div>
+</body>
+</html>

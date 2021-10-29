@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #div{
+        width: 500px;
+        height: 200px;
+        border: 1px solid black;
+        position: absolute;
+    }
+
+    #title{
+        width: 100%;
+        background-color: teal;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    #content{
+        width: 100%;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        font-size: 12px;
+        line-height: 24px;
+    }
+
+</style>
+
+<script>
+
+    window.onload = function(){
+
+        // 获取对象
+        var div = document.getElementById("div");
+        var title = document.getElementById("title");
+
+        dropTitle(div,title);
+
+    }
+
+     // 鼠标拖拽函数
+     function drop(node){
+        //  添加鼠标按下事件
+         node.onmousedown = function(ev){
+            var e = ev || window.event;
+            // 获取鼠标距对象的距离
+            var nodeLeft = e.clientX - node.offsetLeft;
+            var nodeTop = e.clientY - node.offsetTop;
+
+            // 添加拖拽
+            document.onmousemove = function(ev2){
+                var e2 = ev2 || window.event;
+                
+                if(node.offsetLeft <= 0){
+                    node.style.left = "0px";
+                }else{
+                    node.style.left = e2.clientX - nodeLeft + "px";
+                }
+
+                if(node.offsetTop <= 0){
+                    node.style.top = "0px";
+                }else{
+                    node.style.top = e2.clientY - nodeTop + "px";
+                }
+
+            }
+         }
+
+         document.onmouseup = function(ev){
+            document.onmousemove = null;
+         }
+     }
+
+     function dropTitle(node,title){
+        //  添加鼠标按下事件
+         title.onmousedown = function(ev){
+            var e = ev || window.event;
+            // 获取鼠标距对象的距离
+            var nodeLeft = e.clientX - node.offsetLeft;
+            var nodeTop = e.clientY - node.offsetTop;
+
+            // 添加拖拽
+            document.onmousemove = function(ev2){
+                var e2 = ev2 || window.event;
+
+                var l = e2.clientX - nodeLeft;
+                var t = e2.clientY - nodeTop;
+              
+                // 防止拖拽出界
+                  
+                var clientWidth = document.body.clientWidth || document.documentElement.clientWidth;
+                var clientHeigth = document.body.clientHeight || document.documentElement.clientHeight;
+
+                if(l <= 0){
+                    l = 0;
+                }
+
+                if(l >= clientWidth - node.offsetWidth){
+                    l = clientWidth - node.offsetWidth;
+                }
+
+                if(t <= 0){
+                    t = 0;
+                }
+
+                if(t >= clientHeigth - node.offsetHeight){
+                    t = clientHeigth - node.offsetHeight;
+                }
+
+                node.style.left = l + "px";
+                node.style.top = t + "px";
+
+
+
+                // if(node.offsetWidth >= clientWidth){
+                //     node.style.left = "0px";
+                // }
+
+
+            }
+         }
+
+         document.onmouseup = function(ev){
+            document.onmousemove = null;
+         }
+
+        //  获取对象当前有效样式的函数
+         function getStyle(node, style){
+            return node.currentStyle ? node.currentStyle[style] : getComputedStyle(node)[style];
+         }
+
+     }
+
+
+</script>
+
+<body>
+    <div id="div">
+        <div id="title">标题</div>
+        <div id="content">
+            <p>万代（BANDAI）未正式进中国大陆销售前，Gundam在大陆的翻译受香港影响多翻译为“高达”，而万代进驻中国大陆销售时注册名字时发现“高达”一词已被注册，所以改名为“敢达”。早期在80年代，台湾播放的称为钢弹勇士，一直都是以钢弹来称呼。不过，万代已经决定在2017年9月开始，重新正式启用“高达”这一名称，解决了这么多年以来高达粉丝们的怨念。</p>
+        </div>
+    </div>
+</body>
+</html>

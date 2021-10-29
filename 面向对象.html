@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+        // 创建父类Person
+        // function Person(name, age, sex){
+        //     this.name = name;
+        //     this.age = age;
+        //     this.sex = sex;
+        //     // this.show = function(){
+        //     //     // alert(`我叫${name},今年${age}岁,是个${sex}性`);
+        //     //     alert("我叫"+name+", 今年"+age+"岁, 是个"+sex+"性");
+        //     // }
+        // }
+
+        // Person.prototype.show = function(){
+        //     alert("我叫"+this.name+", 今年"+this.age+"岁, 是个"+this.sex+"性");
+        // }
+
+        // var p1 = new Person("小明", 18, "男");
+        // p1.show();
+
+        // // 创建子类student继承父类Person
+        // function Student(name,age,sex,job){
+        //     Person.call(this, name, age, sex);
+        //     this.job = job;
+        //     this.showJob = function(){
+        //         alert("职业是"+job);
+        //     }
+        // }
+
+        // // for (var attr in Person.prototype) {
+        // //     Student.prototype[attr] = Person.prototype[attr];
+        // // }
+
+        // Student.prototype = new Person();
+
+        // var xiaoming = new Student("小明",15,"女","学生");
+        // xiaoming.show();
+        // xiaoming.showJob();
+
+
+        // class创建对象和继承
+        class Person{
+            constructor(name, age, sex){
+                this.name = name;
+                this.age = age;
+                this.sex = sex;
+            }
+        }
+
+        Person.prototype.show = function(){
+            alert("我叫"+this.name+", 今年"+this.age+"岁, 是个"+this.sex+"性");
+        }
+
+        // 子类继承父类
+        class Student extends Person{
+            constructor(name, age, sex, job){
+                super(name, age, sex);
+                this.job = job;
+            }
+
+            showJob() {
+                alert("职业是"+this.job);
+            }
+        }
+
+        var stu = new Student("小王",12,"女","老师");
+        stu.show();
+        stu.showJob();
+
+        
+
+    </script>
+    
+</body>
+</html>

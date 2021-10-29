@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            background-color: orange;
+            opacity: 0.3;
+            filter: alpha(opacity=30);
+        }
+    </style>
+    <script>
+        window.onload = function(){
+
+            function getAttr(node , attr){
+                return window.getComputedStyle(node)[attr] || node.currentStyle[attr];
+            }
+
+            var divs = document.getElementsByTagName("div");
+
+            divs[0].onclick = function(){
+                if(this.index != 1){
+                    startMove2(this, "width", 300, function(){
+                        startMove2(this, "height", 300, function(){
+                            startMove2(this,"opacity", 100);
+                        });
+                    });
+                    this.index = 1;
+                }else{
+                    startMove2(this, "opacity", 30, function(){
+                        startMove2(this, "height", 100, function(){
+                            startMove2(this,"width", 100);
+                        });
+                    });
+                    this.index = 0;
+                }
+            }
+
+            divs[1].onclick = function(){
+                if(this.index != 1){
+                    startMove(this, "height", 300);
+                    this.index = 1;
+                }else{
+                    startMove(this, "height", 100);
+                    this.index = 0;
+                }
+            }
+
+            divs[2].onclick = function(){
+                if(this.index != 1){
+                    startMove(this, "opacity", 100);
+                    this.index = 1;
+                }else{
+                    startMove(this, "opacity", 30);
+                    this.index = 0;
+                }
+            }
+
+            // 点击空白处 宽度变回原样
+            // document.onclick = function(ev){
+            //     var e = ev || window.event;
+            //     if(e.target.index != 0 && e.target.index != 1){
+            //         startMove(divs[0], "width", 100);
+            //         divs[0].index = 0;
+            //     };
+            // }
+            
+            function startMove(node, attr, target){
+                clearInterval(node.interval);
+
+                node.interval = setInterval(function(){
+
+                    if(attr == "opacity"){
+                        var attrValue = parseInt(getAttr(node, attr) * 100);
+
+                        var speed = (target - attrValue) / 30;
+                        speed = parseInt(speed > 0 ? Math.ceil(speed) : Math.floor(speed));
+
+                        if(attrValue == target){
+                            clearInterval(node.interval);
+                        }else{
+                            node.style.opacity = (attrValue + speed) / 100;
+                            node.style.filter = "alpha(opacity="+(attrValue + speed)+")";
+                        }
+
+                    }else{
+                        // 获取到当前对象有效样式的值
+                        // 并且转化成整数
+                        var attrValue = parseInt(getAttr(node, attr));
+
+                        var speed = (target - attrValue) / 8;
+                        speed = parseInt(speed > 0 ? Math.ceil(speed) : Math.floor(speed));
+
+                        if(attrValue == target){
+                            clearInterval(node.interval);
+                        }else{
+                            node.style[attr] = attrValue + speed + "px";
+                        }
+                    }
+
+                },10);
+            }
+
+            function startMove2(node, attr, target, fun){
+                clearInterval(node.interval);
+
+                node.interval = setInterval(function(){
+
+                    if(attr == "opacity"){
+                        var attrValue = parseInt(getAttr(node, attr) * 100);
+
+                        var speed = (target - attrValue) / 30;
+                        speed = parseInt(speed > 0 ? Math.ceil(speed) : Math.floor(speed));
+
+                        if(attrValue == target){
+                            clearInterval(node.interval);
+                            if(fun){
+                                fun.call(node);
+                            }
+                        }else{
+                            node.style.opacity = (attrValue + speed) / 100;
+                            node.style.filter = "alpha(opacity="+(attrValue + speed)+")";
+                        }
+
+                    }else{
+                        // 获取到当前对象有效样式的值
+                        // 并且转化成整数
+                        var attrValue = parseInt(getAttr(node, attr));
+
+                        var speed = (target - attrValue) / 8;
+                        speed = parseInt(speed > 0 ? Math.ceil(speed) : Math.floor(speed));
+
+                        if(attrValue == target){
+                            clearInterval(node.interval);
+
+                            if(fun){
+                                fun.call(node);
+                            }
+
+                        }else{
+                            node.style[attr] = attrValue + speed + "px";
+                        }
+                    }
+
+                },10);
+            }
+        }
+    </script>
+    <body>
+
+        <div></div>
+        <div></div>
+        <div></div>
+        
+    </body>
+</html>

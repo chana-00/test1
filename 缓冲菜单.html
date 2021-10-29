@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    body{
+        height: 2000px;
+    }
+
+    #div1, #div1 img{
+        width: 200px;
+        height: 120px;
+        display: block;
+        position: absolute;
+    }
+</style>
+
+<script>
+
+    window.onload = function(){
+
+        var div = document.getElementById("div1");
+
+        var clientHeight = document.documentElement.clientHeight || window.body.clientHeight;
+
+        var scrollTop = 0;
+
+
+        document.onscroll = function(ev){
+
+            scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+            if(scrollTop > 300){
+
+                var target = scrollTop + (clientHeight - div.offsetHeight) / 2;
+
+                menuDown(div, target);
+
+            }
+
+        }
+
+        var interval = null;
+
+        // 创建缓冲菜单的函数
+        function menuDown(div, target) {
+
+            var target = target;
+            var div = div;
+
+            var speed = 0;
+
+            clearInterval(interval);
+
+            interval = setInterval(function () {
+                
+                if( div.offsetTop == target ){
+                    clearInterval(interval);
+                }else{
+
+                    speed = parseInt((target - div.offsetTop) / 8 > 0 ? Math.ceil((target - div.offsetTop) / 8) : Math.floor((target - div.offsetTop) / 8)) ;
+                    
+                    div.style.top = div.offsetTop + speed + "px";
+
+                }
+
+            },30);
+            
+        }
+
+
+    }
+
+
+</script>
+
+<body>
+    
+    <div id="div1">
+        <img src="./img/img2.jpg" alt="">
+    </div>
+
+
+</body>
+</html>

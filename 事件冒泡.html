@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #div3{
+        height: 50px;
+        background-color: blue;
+    }
+    #div2{
+        padding: 20px;
+        background-color: brown;
+    }
+    #div1{
+        padding: 30px;
+        background-color: burlywood;
+    }
+</style>
+<body>
+
+    <!-- <div>
+        <ul id="ul">
+            <li>li1</li>
+            <li>li2</li>
+            <li>li3</li>
+        </ul>
+    </div> -->
+
+    <div id="div1">
+        <div id="div2">
+            <div id="div3"></div>
+        </div>
+    </div>
+
+    <script>
+
+        // var ul = document.getElementById("ul");
+        // ul.onclick = function(ev){
+        //     var e = ev || window.event;
+        //     var target = e.target || window.event.srcElement;
+        //     if(target.index == 0){
+        //         target.style.color = "black";
+        //         target.index = 1;
+        //     }else{
+        //         target.style.color = "red";
+        //         target.index = 0;
+        //     }
+        // }
+        var divs = document.getElementsByTagName("div");
+
+        document.onclick = function(ev){
+            var e = ev || window.event;
+            var target = e.target || window.event.srcElement;
+            alert(target.id);
+            // target.style.backgroundColor = "red";
+
+        }
+
+        // for(var i = 0; i < divs.length; i++){
+        //     divs[i].onclick = function(ev){
+        //         var e = ev || window.event;
+        //         alert(this.id);
+        //         stopBubble(e);
+        //     }
+        // }
+
+        // 封装取消事件冒泡的函数
+        function stopBubble(ev){
+            ev.cancelbubble ? ev.cancelbubble = true : ev.stopPropagation();
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #small{
+        position: absolute;
+        left: 50px;
+        top: 50px;
+    }
+
+    #small img{
+        display: block;
+        width: 960px;
+        height: 540px;
+    }
+
+    #mask{
+        width:200px;
+        height: 200px;
+        background-color: white;
+        opacity: 0.5;
+        display: none;
+        position: absolute;
+    }
+
+    #big{
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+        position: absolute;
+        left: 1050px;
+        top: 50px;
+    }
+
+    #big img{
+        display: block;
+        width: 1920px;
+        height: 1080px;
+        position: absolute;
+    }
+   
+</style>
+
+<script>
+
+    window.onload = function(){
+
+        var small = document.getElementById("small");
+        var mask = document.getElementById("mask");
+        var big = document.getElementById("big");
+
+        // 给图片添加移入移出来显示或者隐藏遮罩
+        small.onmouseover = function(){
+            mask.style.display = "block";
+            big.getElementsByTagName("img")[0].style.display = "block";
+        }
+        small.onmouseout = function(){
+            mask.style.display = "none";
+            big.getElementsByTagName("img")[0].style.display = "none";
+        }
+
+        // 给mask添加鼠标移动事件 使遮罩跟随鼠标移动
+        small.onmousemove = function(ev){
+            var e = ev || window.event;
+            var left = e.clientX - small.offsetLeft - 100;
+            var top = e.clientY - small.offsetTop - 100;
+
+            // 限制出界
+            if (left <= 0){
+                left = 0;
+            }
+
+            if(top <= 0){
+                top = 0;
+            }
+
+            if(left >= small.offsetWidth - 200){
+                left = small.offsetWidth - 200;
+            }
+
+            if(top >= small.offsetHeight - 200){
+                top = small.offsetHeight - 200;
+            }
+
+            mask.style.left = left + "px";
+            mask.style.top = top + "px";
+
+            // 改变big图片的位置
+            big.getElementsByTagName("img")[0].style.left = left * -2 + "px";
+            big.getElementsByTagName("img")[0].style.top = top * -2 + "px";
+
+        }
+
+        
+
+
+    }
+
+</script>
+
+<body>
+    
+    <div>
+
+        <div id="small">
+            <img src="./img/img2.jpg" alt="">
+            <div id="mask"></div>
+        </div>
+
+        <div id="big">
+            <img src="./img/img2.jpg" alt="">
+        </div>
+
+    </div>
+
+</body>
+</html>

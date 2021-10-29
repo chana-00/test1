@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #div1{
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        position: absolute;
+        border-radius: 50%;
+    }
+</style>
+<script>
+
+    window.onload = function(){
+
+        var div1 = document.getElementById("div1");
+
+        // 坐标
+        var x = 300;
+        var y = 300;
+        // 半径
+        var r = 100;
+        // 弧度
+        var i = 0;
+
+        setInterval(function(){
+            i++;
+
+            var radian = i * Math.PI / 180;
+
+            var a = Math.sin(radian) * r;
+            var b = Math.cos(radian) * r;
+
+            div1.style.left = x + a + "px";
+            div1.style.top = y -b + "px";
+
+            var div = document.createElement("div");
+            div.style.width = "10px";
+            div.style.height = "10px";
+            div.style.backgroundColor = "black";
+            div.style.borderRadius = "50%";
+            div.style.position = "absolute";
+            div.style.left = div1.offsetLeft + "px";
+            div.style.top = div1.offsetTop + "px";
+            document.body.appendChild(div);
+
+        },10);
+
+    }
+
+</script>
+<body>
+    <div id="div1"></div>
+</body>
+</html>

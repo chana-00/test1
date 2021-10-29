@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    div{
+        width: 100px;
+        padding: 20px;
+        background-color: burlywood;
+        text-align: center;
+        margin: 50px auto;
+    }
+    button{
+        width: 100%;
+        margin: 10px 0;
+    }
+
+</style>
+
+<script>
+
+
+    function $(id){
+        return document.getElementById(id);
+    }
+
+    function doubleNum(num){
+        if( num < 10){
+            return "0"+ num;
+        }else{
+            return num;
+        }
+    }
+
+    window.onload = function(){
+
+        var start = $("start");
+        var stop = $("stop");
+        var resolt = $("resole");
+
+        var interval;
+        var i = 0;
+
+        start.onclick = function(){
+            clearInterval(interval);
+            interval = null;
+            interval = setInterval(function(){
+                i++;
+                $("miao").innerHTML = doubleNum( i % 60 );
+                $("fen").innerHTML = doubleNum(parseInt(i / 60) % 60);
+                $("shi").innerHTML = doubleNum( parseInt(i / 3600));
+            },10);
+        }
+
+        stop.onclick = function(){
+            clearInterval(interval);
+        }
+
+        resolt.onclick = function(){
+            clearInterval(interval);
+            i = 0;
+            $("miao").innerHTML = "00";
+            $("fen").innerHTML = "00";
+            $("shi  ").innerHTML = "00";
+        }
+
+    }
+</script>
+
+<body>
+    <div>
+            <span id="shi">00</span>
+            <span >:</span>
+            <span id="fen">00</span>
+            <span>:</span>
+            <span id="miao">00</span>
+        <button id="start">开始</button>
+        <button id="stop">暂停</button>
+        <button id="resole">复位</button>
+    </div>
+</body>
+</html>

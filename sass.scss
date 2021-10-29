@@ -1,0 +1,53 @@
+.box{
+    width: 80px;
+}
+
+.box{
+    div{
+        width: 100%;
+        span{
+            padding: 10px;
+        }
+    }
+}
+
+$width: 100px;
+$key:padding;
+
+.div{
+    width: $width;
+    #{$key}:$width;
+}
+
+@function sum($n , $m){
+    @if(100 == 100){
+        @return 10px;
+    }
+    @return 20px;
+}
+
+.div2{
+    width:sum(20 , 30);
+}
+
+@mixin btn($color) {
+    width: 300px;
+    height: 200px;
+    background-color: $color;
+}
+
+.div3{
+    @include btn(red);
+}
+
+$su-nm(
+    @mixin btn2 ($color) {
+        width: 30em;
+        height: 20em;
+        background-color: $colro;
+    }
+)
+
+.div4{
+    @include btn2($color);
+}

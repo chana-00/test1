@@ -1,0 +1,9 @@
+$colo : red;
+
+.div{
+    margin: 0px;
+    .div2{
+        padding: 0px;
+        color: $colo;
+    }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+a{
+    display: inline-block;
+    margin: 100px 300px;
+    text-decoration: none;
+    color: cadetblue;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#msg{
+    background-color: rgb(228, 228, 228);
+    width: 500px;
+    color: black;
+    position: absolute;
+    display: none;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+</style>
+
+<script>
+    window.onload = function(){
+        // 获取对象
+        var a = document.getElementsByTagName("a");
+        var msg = document.getElementById("msg");
+
+        // 封装数据
+        var msgText = new Array;
+        msgText[0] = "《机动战士高达00》中由「天人武装组织」制造的机动战士「能天使高达」。由于搭载了“GN-Drive（太阳炉）”故具有近乎无限的动能和惊人的机动性。本机设定为近战专用特化机。主武器为装配在右臂上的GN剑及左臂的专用护盾。通过武器的扩充可变为[能天使高达七剑型]，小说版中的[能天使高达雪崩型]。外传中还有经过改修的[能天使高达R3]。";
+        msgText[1] = "本机是ZAFT军在得到地球联合军的高达数据资料后开发的高达中的一架，其出力在强袭高达的4倍之上。机体两翼内各设一门M100型“鲸鱼”等离子光束加农炮，腰部还装有两门MMI-M15型“旗鱼”电磁炮，加上MA-M20型“天狼座”光束步枪，使本机具有相当强劲的火力。";
+        msgText[2] = "杜兰达尔议长所言的“在火力、防御力、机动性、可靠性这些方面均凌驾于脉冲的最强MS“命运，乃是在将脉冲所有形态(silhouette，即脉冲的三套装备)的能力集于一机的理念之下，于战争后期被开发的最新锐MS。";
+
+
+        // 给每个对象添加鼠标事件
+        for(var i = 0 ; i < a.length; i++){
+            a[i].index = i;
+            // 添加鼠标移入事件
+            a[i].onmouseover = function(){
+                msg.style.display = "block";
+                msg.innerHTML = msgText[this.index];
+            }
+
+            // 添加鼠标移出事件
+            a[i].onmouseout = function(){
+                msg.style.display = "none";
+            }
+
+            // 添加鼠标位移事件
+            a[i].onmousemove = function(ev){
+                msg.style.left = ev.clientX + "px";
+                msg.style.top = ev.clientY + 20 + "px";
+            }
+        }
+
+
+
+    }
+</script>
+
+<body>
+
+    <div>
+        <a href="">EXIA</a>
+        <a href="">FREEDOM</a>
+        <a href="">DISTEING</a>
+        <div id="msg"></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0px;
+    }
+    
+    #div1{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: absolute;
+        top: 100px;
+    }
+</style>
+
+<script>
+    
+    var interval = null;
+    function moveLeft(id,target) {
+        var obj = document.getElementById(id);
+        var speed = 5;
+        var target = target;
+
+        speed = obj.offsetWidth < target ? speed : 0 - speed;
+
+        clearInterval(interval);
+        interval = setInterval(function () {
+            if(obj.offsetWidth == target){
+                clearInterval(interval);
+            }else{
+                obj.style.width = obj.offsetWidth + speed + "px";
+            }
+        },10);
+
+    }
+
+    window.onload = function(){
+        var btn1 = document.getElementById("btn1");
+
+        var index = 0;
+        
+        btn1.onclick = function () {
+            var target = 0
+            if(index == 0){
+                target = 500;
+                index = 1;
+            }else{
+                target = 100;
+                index = 0;
+            }
+            moveLeft("div1",target);
+        };
+    }
+
+</script>
+
+<body>
+
+    <button id="btn1">开始</button>
+    <div id="div1"></div>
+    
+</body>
+</html>

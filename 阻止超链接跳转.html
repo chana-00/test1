@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+    div ul{
+        width: 100%;
+        list-style: none;
+    }
+    div{
+        width: 100px;
+        border: 1px solid #999;
+        overflow: hidden;
+        display: none;
+        box-shadow: 3px 3px 1px 0px #999;
+        position: absolute;
+    }
+    div ul li{
+        width: 100%;
+        padding: 10px;
+        border-bottom: 1px solid #999;
+    }
+    div ul li:hover{
+        background-color: cornflowerblue;
+        color: white;
+        cursor: pointer;
+    }
+    div ul li:last-of-type{
+        border-bottom: none;
+    }
+</style>
+<body>
+
+    <div id="div">
+        <ul>
+            <li>
+                新建
+            </li>
+            <li>
+                复制
+            </li>
+            <li>
+                删除
+            </li>
+                
+        </ul>
+    </div>
+
+    <a href="https://www.baidu.com" id="a">跳转</a>
+    
+    <script>
+        // 自定义右键菜单
+        window.oncontextmenu = function(){
+            return false;
+        }
+
+        var div = document.getElementById("div");
+
+        document.onmousedown = function(ev){
+            var e = ev || window.event;
+            if(e.button == 2){
+                div.style.display = "block";
+                div.style.left = e.clientX + "px";
+                div.style.top = e.clientY + "px";
+            }else{
+                div.style.display = "none";
+            }
+        }
+
+        // 阻止超链接跳转
+        a.onclick = function(ev){
+            // return false;
+            var e = ev || window.event;
+            if(!confirm("是否跳转页面?")){
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;
+            }
+        }
+
+    </script>
+
+</body>
+</html>

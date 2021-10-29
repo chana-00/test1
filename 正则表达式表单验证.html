@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #sign{
+        width: 400px;
+        height: 300px;
+        border: 1px solid black;
+        margin: 100px auto;
+        font-size: 12px;
+        background-color: rgba(235, 235, 235, 0.226);
+    }
+
+    #sign > div{
+        width: 80%;
+        margin: 50px auto;
+    }
+
+    input{
+        display: block;
+        width: 100%;
+        height: 30px;
+    }
+
+    span{
+        width: 100%;
+        display: block;
+        color: rgb(190, 190, 190);
+        margin-top: 5px;
+        margin-left: 10px;
+    }
+
+    .passStatic{
+        width: 30%;
+        height: 20px;
+        background-color: silver;
+        float: left;
+        color: white;
+        margin-left: 10px;
+        margin-top: 10px;
+        text-align: center;
+        border-radius: 10px;
+        line-height: 20px;
+    }
+
+</style>
+
+<script>
+
+    window.onload = function(){
+
+        var user = document.getElementById("username");
+        var pass = document.getElementById("password");
+        var uMsg = document.getElementById("userMsg");
+
+        var passSta = document.getElementsByClassName("passStatic");
+
+        // 用户名验证
+        user.onblur = function(){
+            // 判断输入的用户名长度
+            if(user.value.length < 6 || user.value.length > 12){
+                uMsg.innerText = "请输入长度为6-12位的用户名";
+                uMsg.style.color = "red";
+                return;
+            }
+
+            // 判断用户名是否为数字、字母、下划线以外的组成
+            if(!/^\w+$/.test(user.value)){
+                uMsg.innerText = "用户名只能由数字、字母、下划线组成";
+                uMsg.style.color = "red";
+                return;
+
+            // 验证通过
+            }else{
+                uMsg.innerText = "用户名正确";
+                uMsg.style.color = "green";
+            }
+        }
+
+        // 判断密码强度
+        // 数字+小写 或数字+大写 或小写+大写 判定为中
+        pass.onkeyup = function(){
+
+            // 初始化背景
+
+            // 全数字 或全小写 或全大写 判定为弱
+            if(/^\d+$/.test(pass.value) || /^[a-z]+$/.test(pass.value) || /^[A-Z]+$/.test(pass.value)){
+                passSta[0].style.backgroundColor = "orange";
+                passSta[1].style.backgroundColor = "silver";
+                passSta[2].style.backgroundColor = "silver";
+
+            // 数字、小写、大写混合 判定为强
+            }else if(/\d+/.test(pass.value) && /[a-z]+/.test(pass.value) && /[A-Z]+/.test(pass.value)){
+                passSta[2].style.backgroundColor = "orange";
+                passSta[0].style.backgroundColor = "silver";
+                passSta[1].style.backgroundColor = "silver";
+            }else{
+                passSta[1].style.backgroundColor = "orange";
+                passSta[0].style.backgroundColor = "silver";
+                passSta[2].style.backgroundColor = "silver";
+            }
+
+
+        }
+
+
+    }
+
+</script>
+
+<body>
+    <div id="sign">
+        <div>
+            <input type="text" placeholder="请输入用户名" id="username">
+            <span id="userMsg">用户名长度为6-12位，由数字、字母、下划线组成</span>
+        </div>
+        <div>
+            <input type="text" placeholder="请输入密码" id="password">
+            <div id="static">
+                <div class="passStatic">弱</div>
+                <div class="passStatic">中</div>
+                <div class="passStatic">强</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    #content{
+        width: 500px;
+        height: 600px;
+        border: 1px solid black;
+        margin: 150px  auto;
+        position: relative;
+    }
+
+    #ball{
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 20px;
+        left: 240px;
+    }
+
+    #bar{
+        width: 50px;
+        height: 20px;
+        background-color: blue;
+        position: absolute;
+        left: 225px;
+        bottom: 0px;
+        user-select: none;
+    }
+
+    .brick{
+        width: 100px;
+        height: 20px;
+        background-color: black;
+        float: left;
+    }
+
+    #div1{
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        position: absolute;
+        top: 500px;
+        left:300px;
+        user-select: none;
+    }
+
+    #div2{
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        user-select: none;
+    }
+
+</style>
+
+<script>
+
+    window.onload = function(){
+
+
+        function $(idName){
+            return document.getElementById(idName);
+        }
+
+        var content = $("content");
+        var ball = $("ball");
+        var bar = $("bar");
+
+        var bricks = document.getElementById("bricks");
+        var brick = document.getElementsByClassName("brick");
+
+        var contentWidth = parseInt(getComputedStyle(content)["width"]) || parseInt(content.currentStyle["width"]);
+        var contentHeight = parseInt(getComputedStyle(content)["height"]) || parseInt(content.currentStyle["height"]);
+
+        // 创建砖块
+        var count = 30;
+        var arr = new Array();
+
+        // 随机颜色
+        function randomColor(){
+            return "rgba("+ parseInt(Math.random() * 255) +","+ parseInt(Math.random() * 255) +","+ parseInt(Math.random() * 255)+")";
+        }
+
+        for(var i = 0 ; i < count; i++){
+            var div = document.createElement("div");
+            div.classList.add("brick");
+            div.style.backgroundColor = randomColor();
+            $("bricks").append(div);
+        }
+
+
+        var speedX = parseInt(Math.random() * 5 + 3) ;
+        var speedY = parseInt(Math.random() * 5 + 3) * -1;
+
+        for(var i = 0; i < brick.length; i++){
+                brick[i].style.left = brick[i].offsetLeft + "px";
+                brick[i].style.top = brick[i].offsetTop + "px";
+            }
+
+        for(var i = 0; i < brick.length; i++){
+            brick[i].style.position = "absolute";
+        }
+
+        var interval = null;
+
+        // 球运动
+        interval = setInterval(function(){
+
+            if(brick.length == 0){
+                alert("YOU WIN!");
+                clearInterval(interval);
+                location.reload();
+            }
+
+            if(thoch(ball, bar)){
+                speedY *= -1;
+            }
+
+            for(var i = 0; i < brick.length; i++){
+                if(thoch(ball, brick[i])){
+                    speedY *= -1;
+                    bricks.removeChild(brick[i]);
+                }
+            }
+
+            var offsetX = ball.offsetLeft + speedX;
+            var offsetY = ball.offsetTop + speedY;
+
+            // 限制出界
+            if(offsetX <= 0 || offsetX >= contentWidth - ball.offsetWidth){
+                speedX *= -1;
+            }
+
+            if(offsetY <= 0){
+                speedY *= -1;
+            }
+
+            if(offsetY >= contentHeight - ball.offsetHeight){
+                alert("GAME OVER");
+                clearInterval(interval);
+                location.reload();
+            }
+
+
+            ball.style.left = offsetX + "px";
+            ball.style.top = offsetY + "px";
+
+
+        },30);
+
+        drag(bar);
+
+        // 添加拖拽
+        function drag(node){
+
+            node.onmousedown = function(ev){
+
+                var _this = this;
+
+                var e = ev || window.event;
+
+                var offsetX = e.clientX - _this.offsetLeft;
+
+                document.onmousemove = function(ev){
+                    var e = ev || window.event;
+
+                    var left = e.clientX - offsetX;
+                    // 限制出界
+                    if(left <= 0){
+                        left = 0;
+                    }
+
+                    if(left >= contentWidth - _this.offsetWidth){
+                        left = contentWidth - _this.offsetWidth;
+                    }
+
+                    _this.style.left = left + "px";
+                }
+
+            }
+        }
+
+        document.onmouseup = function(){
+            document.onmousemove = null;
+        }
+
+        // 碰撞检测
+        function thoch(node1,node2){
+
+            var nodeObj1 = {
+                top : node1.offsetTop,
+                left : node1.offsetLeft,
+                right : node1.offsetLeft + node1.offsetWidth,
+                bottom : node1.offsetTop + node1.offsetHeight
+            }
+
+            var nodeObj2 = {
+                top : node2.offsetTop,
+                left : node2.offsetLeft,
+                right : node2.offsetLeft + node2.offsetWidth,
+                bottom : node2.offsetTop + node2.offsetHeight
+            }
+
+            if(nodeObj1.top > nodeObj2.bottom || nodeObj1.left > nodeObj2.right || nodeObj1.right < nodeObj2.left || nodeObj1.bottom < nodeObj2.top){
+                return false;
+            }else{
+                return true;
+            }
+        }
+
+
+    }
+
+</script>
+
+<body>
+
+    <div id="content">
+        <div id="ball"></div>
+        <div id="bar"></div>
+        <div id="bricks">
+        </div>
+    </div>
+
+</body>
+</html>

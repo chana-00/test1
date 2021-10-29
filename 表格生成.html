@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    div input{
+        width: 200px;
+        height: 30px;
+    }
+
+    #table{
+        border: 1px solid black;
+    }
+
+    #table tr td {
+        width: 150px;
+        height: 30px;
+        border: 1px solid black;
+    }
+    #table tr td input{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+    
+<script>
+    window.onload = function(){
+        var row = document.getElementById("row");
+        var col = document.getElementById("col");
+        var btn = document.getElementById("btn");
+        var table = document.getElementById("table");
+
+        btn.onclick = function(){
+
+            if(row.value == false || col.value == false){
+                alert("请输入行和列！");
+            }else{
+                for(var i = 0; i < row.value; i++){
+                    var newRow = document.createElement("tr");
+                    for(var j = 0; j < col.value; j++){
+                        var newCol = document.createElement("td");
+                        if(j == col.value - 1){
+                            var del = document.createElement("input");
+                            del.type = "button";
+                            del.value = "删除"+i;
+                            newCol.appendChild(del);
+                        }
+                        newRow.appendChild(newCol);
+                    }
+                    table.appendChild(newRow);
+                }
+            }
+            
+            table.onclick = function(ev){
+                var e = ev || window.event;
+                var target = e.target || window.event.srcElement;
+
+                table.removeChild(target.parentNode.parentNode);
+
+            }
+
+        }
+
+       
+
+    }
+</script>
+
+<body>
+    <div>
+        <input type="text" placeholder="row" id="row">
+        <input type="text" placeholder="col" id="col">
+        <input type="button" value="生成" id="btn">
+    </div>
+    <div>
+        <table id="table">
+           
+        </table>
+    </div>
+</body>
+</html>

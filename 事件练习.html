@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    div{
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+    }
+</style>
+
+<script>
+
+    window.onload = function(){
+        var arrDiv = document.getElementsByTagName("div");
+        document.onmousemove = function(ev){
+            var e = ev || window.event;
+            for(var i = arrDiv.length - 1 ; i > 0; i--){
+                    arrDiv[i].style.left = arrDiv[i - 1].offsetLeft + "px";
+                    arrDiv[i].style.top = arrDiv[i - 1].offsetTop + "px";
+                }
+                arrDiv[0].style.left = e.clientX + "px";
+                arrDiv[0].style.top = e.clientY + "px";
+           
+            
+            
+        }
+
+    }
+
+</script>
+
+<body>
+
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    
+</body>
+</html>

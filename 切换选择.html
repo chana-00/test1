@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #content{
+        width: 400px;
+        margin: 200px auto;
+    }
+
+    #btn input{
+        width: 100px;
+        height: 40px;
+        color: black;
+        margin: 0px;
+    }
+
+    #btn .action{
+        background-color: teal;
+        color: white;
+    }
+
+    #text p{
+        display: none;
+    }
+
+    #text .show{
+        display: block;
+        width: 310px;
+        height: 400px;
+        overflow: hidden;
+        border: 1px solid black;
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+    
+    <div id="content">
+        <div id="btn">
+            <input type="button" value="HTML" class="action">
+            <input type="button" value="CSS">
+            <input type="button" value="JAVASCRIPT">
+        </div>
+        <div id="text">
+            <p class="show">HTML的全称为超文本标记语言，是一种标记语言。它包括一系列标签．通过这些标签可以将网络上的文档格式统一，使分散的Internet资源连接为一个逻辑整体。HTML文本是由HTML命令组成的描述性文本，HTML命令可以说明文字，图形、动画、声音、表格、链接等。</p>
+            <p>层叠样式表(英文全称：Cascading Style Sheets)是一种用来表现HTML（标准通用标记语言的一个应用）或XML（标准通用标记语言的一个子集）等文件样式的计算机语言。CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。</p>
+            <p>JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式、声明式、函数式编程范式。</p>
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+    // 获取input对象
+    var btns = document.getElementById("btn");
+    var inputs = btns.getElementsByTagName("input");
+
+    // 获取文本对象
+    var texts = document.getElementById("text");
+    var ps = texts.getElementsByTagName("p");
+
+    // 给input对象添加执行函数
+    for(var i = 0; i < inputs.length ; i++){
+        inputs[i].index = i;
+        inputs[i].onclick = function(){
+            for(var j = 0; j < inputs.length; j++){
+                inputs[j].removeAttribute("class");
+            }
+            inputs[this.index].className = "action";
+            textChange(this.index);
+        }
+    }
+
+    // 文本切换的函数
+    function textChange(index){
+        for(var i = 0; i < ps.length; i++){
+            ps[i].removeAttribute("class");
+        }
+        ps[index].setAttribute("class","show");
+    }
+
+
+</script>
+
+</html>

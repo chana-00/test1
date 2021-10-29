@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #div1{
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+        position: absolute;
+        left: 500px;
+        top: 100px;
+        user-select:none;
+    }
+    #div2{
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        position: absolute;
+        left: 300px;
+        top: 100px;
+        user-select: none;
+    }
+</style>
+
+<script>
+
+    // 点击拖拽移动对象的函数
+    function Drag(id) {
+        this.div = document.getElementById(id);
+        var _this = this;
+
+        this.div.onmousedown = function (ev) {
+            _this.dragDown(ev);
+        };
+
+        document.onmouseup = function () {
+            _this.dragUp();
+        };
+    }
+
+    Drag.prototype.dragDown = function (ev) {
+        // 获取事件对象
+        var e = ev || window.event;
+        var _this = this;
+
+        // 获取鼠标距对象的距离
+        this.left = e.clientX - this.div.offsetLeft;
+        this.top = e.clientY - this.div.offsetTop;
+
+        // alert(this.div.offsetLeft);
+        
+        document.onmousemove = function (ev) {
+            _this.dragMove(ev);
+        }
+    }
+
+    Drag.prototype.dragMove = function (ev) {
+        var e = ev || window.event;
+        // 获取移动对象的坐标
+        this.moveLeft = e.clientX - this.left;
+        this.moveTop = e.clientY - this.top;
+
+        this.div.style.left = this.moveLeft + "px";
+        this.div.style.top = this.moveTop + "px";
+    }
+
+    Drag.prototype.dragUp = function(){
+        document.onmousemove = null;
+    }
+
+    // 创建限制出界的拖拽函数 继承拖拽函数
+    function LimitDrag(id) {
+        // Drag.apply(this,[id]);
+        Drag.call(this, id);
+    }
+
+    for (var funName in Drag.prototype) {
+        LimitDrag.prototype[funName] = Drag.prototype[funName];
+    }
+
+
+    LimitDrag.prototype.dragMove = function (ev) {
+        var e = ev || window.event;
+        // 获取移动对象的坐标
+        this.moveLeft = e.clientX - this.left;
+        this.moveTop = e.clientY - this.top;
+
+        // 获取窗口的宽度和高度
+        var windowWidth = document.documentElement.clientWidth || document.body.clientWidth;
+        var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+        // 判断当前对象是否出界
+        if(this.moveLeft <= 0){
+            this.moveLeft = 0;
+        }
+
+        if(this.moveLeft >= windowWidth - this.div.offsetWidth){
+            this.moveLeft = windowWidth - this.div.offsetWidth
+        }
+        
+        if(this.moveTop <= 0){
+            this.moveTop = 0;
+        }
+
+        if(this.moveTop >= windowHeight - this.div.offsetHeight){
+            this.moveTop = windowHeight - this.div.offsetHeight
+        }
+
+        this.div.style.left = this.moveLeft + "px";
+        this.div.style.top = this.moveTop + "px";
+
+    }
+
+    window.onload = function(){
+        new Drag("div1");
+        new LimitDrag("div2");
+    }
+
+
+</script>
+
+<body>
+
+    <div id="div1">
+    </div>
+    <div id="div2">
+    </div>
+    
+</body>
+</html>
